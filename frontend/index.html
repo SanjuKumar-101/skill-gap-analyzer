@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <script>
+      /*
+       * Apply the persisted (or system) theme before first paint so the app
+       * never flashes light before React mounts. Keep this in sync with
+       * src/context/ThemeContext.jsx (storage key: "skillgo-theme").
+       */
+      (function () {
+        try {
+          var stored = window.localStorage.getItem('skillgo-theme');
+          var prefersDark =
+            window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var isDark = stored === 'dark' || (stored !== 'light' && prefersDark);
+          var root = document.documentElement;
+          if (isDark) {
+            root.classList.add('dark');
+            root.style.colorScheme = 'dark';
+          } else {
+            root.classList.remove('dark');
+            root.style.colorScheme = 'light';
+          }
+        } catch (err) {
+          /* Fail open to light mode. */
+        }
+      })();
+    </script>
+    <meta
+      name="description"
+      content="SkillGO is the AI-powered skill gap intelligence platform. Upload your resume, benchmark it against any role or company, and receive a personalized 4-week roadmap, weekly quizzes and real GitHub proof-of-work verification."
+    />
+    <meta name="theme-color" content="#e0e0e0" />
+    <meta name="application-name" content="SkillGO" />
+    <meta property="og:title" content="SkillGO — AI Skill Gap Intelligence" />
+    <meta
+      property="og:description"
+      content="Close your skill gaps with AI. Analyze your resume, get a personalized roadmap, and verify your skills with real GitHub proof-of-work."
+    />
+    <meta property="og:type" content="website" />
+    <title>SkillGO — AI Skill Gap Analyzer &amp; Proof-of-Work Verifier</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
